@@ -40,6 +40,20 @@ app.UseCors();
 
 app.UseAuthorization();
 
+app.Use(async (context, next) =>
+{
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>(); // Replace "Program" with the actual type if different
+
+    try
+    {
+        await next();
+    }
+    catch (Exception ex) {
+        Console.WriteLine("Exception occured");
+        Console.WriteLine(ex.ToString());
+    }
+});
+
 app.MapControllers();
 
 app.Run();
