@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Reddit;
+using Reddit.Middlewares;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,19 +42,14 @@ app.UseCors();
 
 app.UseAuthorization();
 
-app.Use(async (context, next) =>
+app.Run(async (context) =>
 {
-    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>(); // Replace "Program" with the actual type if different
-
-    try
-    {
-        await next();
-    }
-    catch (Exception ex) {
-        Console.WriteLine("Exception occured");
-        Console.WriteLine(ex.ToString());
-    }
+    await context.Response.WriteAsync("Terminal run middleware stopped execution");
 });
+
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 
 app.MapControllers();
 
