@@ -5,7 +5,7 @@
 namespace Reddit.Migrations
 {
     /// <inheritdoc />
-    public partial class FluentApi : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
