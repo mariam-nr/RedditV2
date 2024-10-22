@@ -33,6 +33,7 @@ namespace Reddit.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(int id)
         {
+            //throw new Exception("happy birthday mariam");
             var comment = await _context.Comments.FindAsync(id);
 
             if (comment == null)

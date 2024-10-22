@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Reddit;
 using Reddit.Middlewares;
+using Reddit.Repositories;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.LogTo(Console.WriteLine, LogLevel.Information);
     options.UseLazyLoadingProxies();
 });
+
+builder.Services.AddScoped<IPostsRepository, PostsRepository>();
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy
@@ -42,10 +45,10 @@ app.UseCors();
 
 app.UseAuthorization();
 
-app.Run(async (context) =>
-{
-    await context.Response.WriteAsync("Terminal run middleware stopped execution");
-});
+//app.Run(async (context) =>
+//{
+//    await context.Response.WriteAsync("Terminal run middleware stopped execution");
+//});
 
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
