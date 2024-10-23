@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Reddit;
+using Reddit.Middlewares;
+//using Reddit.Repositories;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +42,9 @@ app.UseHttpsRedirection();
 app.UseCors();
 
 app.UseAuthorization();
+
+//globally catch and manage exceptions
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
